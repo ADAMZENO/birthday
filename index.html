@@ -1,180 +1,1172 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>เซอร์ไพรส์วันเกิด!</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap');
-
-    body {
-      font-family: 'Kanit', sans-serif;
-      background: linear-gradient(-45deg, #ffe6f0, #ffeaea, #fff5e6, #ffe0f0);
-      background-size: 400% 400%;
-      animation: backgroundMove 10s ease infinite;
-      text-align: center;
-      padding: 60px 20px;
-      color: #333;
-      overflow: hidden;
-    }
-
-    @keyframes backgroundMove {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    h1 {
-      font-size: 3em;
-      color: #ff66a3;
-      animation: fadeIn 2s ease;
-    }
-
-    p {
-      font-size: 1.2em;
-      animation: fadeIn 3s ease;
-    }
-
-    #story {
-      margin-top: 30px;
-      font-size: 1.4em;
-      min-height: 150px;
-      white-space: pre-wrap;
-      color: #444;
-    }
-
-    button {
-      padding: 15px 35px;
-      font-size: 1.2em;
-      background-color: #ff66a3;
-      color: white;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255, 102, 163, 0.5);
-      transition: transform 0.2s ease;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วันปัจฉิม - สําหรับน้องดาาาด้าาา</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Sriracha&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-light: #FFF0F5;
+            --pink-soft: #FFE4EC;
+            --pink-medium: #FFB6C1;
+            --pink-main: #FF69B4;
+            --pink-dark: #DB7093;
+            --pink-deep: #C71585;
+            --text-dark: #5A3D5C;
+            --text-light: #8B5D7E;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--pink-soft) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        /* พื้นหลังพิเศษ */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.2) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(219, 112, 147, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 40% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 20%);
+            z-index: -2;
+        }
+        
+        /* เนื้อหาหลัก */
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .header {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        
+        h1 {
+            font-family: 'Sriracha', cursive;
+            font-size: 3.5rem;
+            color: var(--pink-deep);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--pink-dark);
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+        
+        /* Rose Container */
+        .rose-container {
+            position: relative;
+            width: 450px;
+            height: 450px;
+        }
+        
+        #roseCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+            border: 2px solid var(--pink-medium);
+        }
+        
+        .rose-info {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--pink-dark);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--pink-medium);
+        }
+        
+        /* Controls */
+        .controls-container {
+            flex: 1;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.2);
+            border: 2px solid var(--pink-medium);
+        }
+        
+        .controls-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--pink-deep);
+            font-weight: 600;
+        }
+        
+        .progress-container {
+            margin-bottom: 25px;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 15px;
+            background: rgba(255, 182, 193, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--pink-medium);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--pink-main), var(--pink-deep));
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .petal-count {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            border: 1px solid var(--pink-medium);
+            color: var(--pink-dark);
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, var(--pink-main), var(--pink-dark));
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(255, 105, 180, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background: linear-gradient(to right, #CCCCCC, #999999);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ปุ่มเพลงเพียงปุ่มเดียว */
+        .music-btn-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .music-btn {
+            background: linear-gradient(to right, var(--pink-main), var(--pink-deep));
+            color: white;
+            border: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .music-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+        
+        .music-btn:hover::before {
+            left: 100%;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.6);
+        }
+        
+        .music-btn.active {
+            background: linear-gradient(to right, var(--pink-deep), #9C27B0);
+        }
+        
+        .music-btn .tooltip {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            pointer-events: none;
+        }
+        
+        .music-btn:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* ป็อบอัพจดหมาย - ปรับขนาดให้อ่านง่าย */
+        .letter-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .letter-container {
+            background-color: white;
+            width: 90%;
+            max-width: 700px;
+            height: 80vh;
+            max-height: 700px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transform: scale(0.95);
+            animation: letterAppear 0.5s forwards;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @keyframes letterAppear {
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        .letter-header {
+            background: linear-gradient(to right, var(--pink-main), var(--pink-deep));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        .letter-header h2 {
+            font-family: 'Sriracha', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .letter-header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .letter-body {
+            padding: 30px;
+            text-align: left;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #333;
+            overflow-y: auto;
+            flex-grow: 1;
+            background: #fffafb;
+        }
+        
+        .letter-body p {
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .letter-body p:first-child {
+            font-weight: 400;
+            color: var(--pink-deep);
+        }
+        
+        .letter-footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+            font-style: italic;
+            color: var(--pink-dark);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--pink-main);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        
+        .close-btn:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: var(--pink-deep);
+        }
+        
+        /* เอฟเฟกต์ดอกไม้ลอย */
+        .floating-flowers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .flower {
+            position: absolute;
+            font-size: 24px;
+            color: var(--pink-main);
+            opacity: 0.5;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* YouTube Iframe Container */
+        #youtubeIframe {
+            display: none; /* ซ่อน iframe จริงไว้ ใช้เฉพาะ API */
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .rose-container {
+                width: 400px;
+                height: 400px;
+            }
+            
+            .controls-container {
+                max-width: 400px;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .rose-container {
+                width: 350px;
+                height: 350px;
+            }
+            
+            .letter-container {
+                width: 95%;
+                height: 85vh;
+            }
+            
+            .letter-header h2 {
+                font-size: 2rem;
+            }
+            
+            .letter-body {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+            
+            .music-btn-container {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .music-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .rose-container {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .btn {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+            }
+            
+            .music-btn-container {
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .music-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>🎉 สุขสันต์วันเกิดนิน 🎂</h1>
-  <p>นี่คือสิ่งที่เตรียมไว้ในวันเกิดเองพร้อมรึยังง?</p>
-  <button onclick="nextScene()">กดที่ตรงนี้สินิน</button>
-  <div id="story"></div>
-  <canvas id="fireworks"></canvas>
-
-  <script>
-    const scenes = [
-      "ขอบคุณ... ขอบคุณมากจริงๆที่คุยเล่นกับเราตลอดมา...",
-      "นี่คือสิ่งที่เราเตรียมให้เองได้นิน",
-      "ถึงมัน ... จะไม่ได้มากอะไรก็ตามเเต่",
-      "อยากให้เองมีความสุขกับวันเกิดให้มาก ทําอะไรทําไปเลย",
-      "เหนื่อยก็พัก ถ้ารู้สึกว่าตัวเองไม่ไหวลองนอนกลิ้งบนเตียงสัก 3 รอบ",
-      "เเล้วทีนี้ ... สุขสันต์วันเกิดนะนิน\" 🎉🎉🎉",
-      "ขอให้เองสมปราถนาทุกๆอย่างที่ตัวเองขอ",
-      "มีความสุขให้มากๆกับวันเกิดปีนี้ละ \nเป็นเกียรติมากๆที่เองได้คอยช่วยเหลือเราตลอดมา "
-    ];
-
-    let index = 0;
-    let isTyping = false;
-
-    function nextScene() {
-      if (isTyping) return;
-      if (index < scenes.length) {
-        typeText(scenes[index]);
-        index++;
-        if (index === scenes.length) {
-          setTimeout(() => launchFireworks(), 1000);
+    <!-- พื้นหลัง -->
+    <div class="bg-pattern"></div>
+    <div class="floating-flowers" id="floatingFlowers"></div>
+    
+    <!-- ปุ่มเพลงเพียงปุ่มเดียว -->
+    <div class="music-btn-container">
+        <button class="music-btn" id="musicToggle">
+            <i class="fas fa-play" id="musicIcon"></i>
+            <div class="tooltip">เปิด/ปิดเพลง</div>
+        </button>
+    </div>
+    
+    <!-- YouTube Iframe (ซ่อนไว้) -->
+    <div id="youtubeIframe"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>วันปัจฉิมสําหรับดาาาด้าา</h1>
+            <div class="subtitle">ถึงน้องดาด้า</div>
+            <div class="tagline">พี่เตรียมเว็บนี้ให้น้องเพื่อมาเซอร์ไพรโดยเฉพาะไม่รู้ว่าน้องจะถูกจะไหมเเต่ก็ทําให้มาเเล้ว</div>
+        </div>
+        
+        <div class="main-content">
+            <div class="rose-container">
+                <canvas id="roseCanvas" width="450" height="450"></canvas>
+                <div class="rose-info" id="roseInfo">ดอกกุหลาบที่กุทํากําลังโตตตต</div>
+            </div>
+            
+            <div class="controls-container">
+                <h2 class="controls-title">ดอกกุหลาบ 9 พัน 9 ร้อย 9 สิบ 9 ดอก</h2>
+                
+                <div class="progress-container">
+                    <div class="progress-text">
+                        <span>ความคืบหน้า:</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                
+                <div class="petal-count" id="petalCount">
+                    <i class="fas fa-leaf"></i> จำนวนกลีบกุหลาบประกอบแล้ว: <span id="petalNum">0</span> กลีบ
+                </div>
+                
+                <div class="btn-group">
+                    <button id="startBtn" class="btn">
+                        <i class="fas fa-play-circle"></i> เริ่มสร้างดอกกุหลาบ
+                    </button>
+                    <button id="letterBtn" class="btn" disabled>
+                        <i class="fas fa-envelope-open-text"></i> เปิดจดหมายวันปัจฉิม
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ป็อบอัพจดหมาย (ปรับขนาดให้อ่านง่าย) -->
+    <div class="letter-popup" id="letterPopup">
+        <button class="close-btn" id="closeLetterBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="letter-container">
+            <div class="letter-header">
+                <h2>จดหมายวันปัจฉิม</h2>
+                <p>ถึงเพื่อนดาด้า</p>
+            </div>
+            <div class="letter-body">
+                <p>สวัสดีไอ้ดาด้า,</p>
+                
+                <p>ถึงจะเป็นเวลาสั้น ๆ ไม่นานที่ได้เจอกับน้องดาด้า แต่ก็เป็นช่วงเวลาที่มีความสุข (มั้ง) และตอนนี้น้องกำลังจะจบการศึกษาชั้น ม.3 แล้ว พี่อยากให้น้องมีความสุข มีสุขภาพร่างกายแข็งแรงงงง แข็งแรง เพราะน้องดูป่วยบ่อยมาก (กาก)</p>
+                
+                <p>แล้วก็พี่อยากให้น้องเก็บความทรงจำกับเพื่อน ๆ ในช่วงมัธยมต้นไว้ให้มาก ๆ เพราะโอกาสที่จะได้มีช่วงเวลาแบบนี้ มีเพียงครั้งเดียวในชีวิต ถ่ายรูปไปเยอะะะ ๆ (ถึงพี่จะรู้ว่าน้องไม่ถ่ายก็เถอะ) เเล้วเก็บช่วงเวลาดีๆเเบบนี้ไว้ตลอด</p>
+                
+                <p>พี่คิดอยู่ตลอดว่าจะให้ของขวัญอะไรน้องในงานปัจฉิมดี แต่ก็เอ๊ะ! ขึ้นมาว่า น้องอยากได้เว็บอะไรแบบนี้นี่หว่าาา แล้วมันก็เป็นสิ่งเดียวที่พี่ถนัดที่สุดแล้ว พี่เลยทำเว็บนี้ขึ้นมาให้น้องโดยเฉพาะเลยแหละะะ ดีใจมะะะะะ ๆ</p>
+                
+                <p>แล้วก็อย่ากัดเขาให้มากที่โรงเรียนใหม่นะ ถึงพี่จะรู้ว่าน้องไม่ชอบขี้หน้าเขา หรือไม่ชอบเขา หรือไม่ชอบอะไรก็แล้วแต่ แต่อย่ากัดเขาเป็นอันขาดนะ ดาด้า พี่รู้สึกสงสารเพื่อน ๆ ที่โรงเรียนใหม่ของน้องมากจริง ๆ เลย</p>
+                
+                <p>ตอนนี้รู้สึกว่าพูดมากละ ไม่รู้ด้ยซ้ำว่าน้องจะอ่านหมดไหม เพราะน้องไม่ชอบอะไรที่ยาวๆนิ เเต่จะสรุปให้สั้นๆ ขอให้น้องสมหวังกับทุกๆอย่างในชีวิตของน้องนะดาด้า</p>
+                
+                <p>ด้วยความรักและคิดถึงเสมอ</p>
+            </div>
+            <div class="letter-footer">
+                <p>จากใจ สห. ของน้อง'<br>
+                วันที่ 26 มีนาคม (วันปัจฉิม)</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
+    <script>
+        // สร้างดอกไม้ลอย
+        function createFloatingFlowers() {
+            const container = document.getElementById('floatingFlowers');
+            const flowerCount = 20;
+            const flowerIcons = ['❀', '✿', '🌸', '🌺', '🏵️'];
+            
+            for (let i = 0; i < flowerCount; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowerIcons[Math.floor(Math.random() * flowerIcons.length)];
+                
+                // สีชมพูแบบสุ่ม
+                const pinkShades = ['#FFB6C1', '#FF69B4', '#DB7093', '#C71585', '#FF1493'];
+                flower.style.color = pinkShades[Math.floor(Math.random() * pinkShades.length)];
+                
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                flower.style.opacity = Math.random() * 0.5 + 0.3;
+                flower.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                flower.style.animationDelay = Math.random() * 5 + 's';
+                
+                container.appendChild(flower);
+            }
         }
-      } else {
-        typeText("ถ้าได้อ่านถึงตอนนี้ก็ขอขอบคุณมากๆจริงๆนะที่อ่านจนจบขอบคุณจริงๆ");
-      }
-    }
-
-    function typeText(text) {
-      isTyping = true;
-      const el = document.getElementById("story");
-      el.textContent = "";
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          el.textContent += text[i];
-          i++;
-        } else {
-          clearInterval(interval);
-          isTyping = false;
+        
+        // วาดดอกกุหลาบ
+        class PinkRose {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.width = canvas.width;
+                this.height = canvas.height;
+                this.centerX = this.width / 2;
+                this.centerY = this.height / 2;
+                
+                // สีชมพูต่างๆ สำหรับดอกกุหลาบ
+                this.pinkColors = [
+                    '#FFE4EC', '#FFB6C1', '#FF91A4',
+                    '#FF69B4', '#FF1493', '#DB7093',
+                    '#C71585', '#B03060'
+                ];
+                
+                // สถานะดอกกุหลาบ
+                this.progress = 0;
+                this.petalCount = 0;
+                this.totalPetals = 60;
+                
+                // เริ่มวาดดอกกุหลาบ
+                this.draw();
+            }
+            
+            // วาดดอกกุหลาบ
+            draw() {
+                // ล้าง Canvas
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                
+                // วาดพื้นหลัง
+                this.drawBackground();
+                
+                // วาดก้านและใบ (เริ่มที่ progress 10%)
+                if (this.progress >= 0.1) {
+                    const stemProgress = Math.min(1, (this.progress - 0.1) / 0.2);
+                    this.drawStem(stemProgress);
+                    
+                    if (this.progress >= 0.15) {
+                        const leafProgress = Math.min(1, (this.progress - 0.15) / 0.15);
+                        this.drawLeaves(leafProgress);
+                    }
+                }
+                
+                // วาดดอกกุหลาบ (เริ่มที่ progress 30%)
+                if (this.progress >= 0.3) {
+                    const flowerProgress = Math.min(1, (this.progress - 0.3) / 0.7);
+                    this.drawFlower(flowerProgress);
+                }
+            }
+            
+            // วาดพื้นหลัง
+            drawBackground() {
+                // พื้นหลังวงกลมสีชมพูโปร่งแสง
+                const gradient = this.ctx.createRadialGradient(
+                    this.centerX, this.centerY, 0,
+                    this.centerX, this.centerY, 250
+                );
+                
+                gradient.addColorStop(0, 'rgba(255, 228, 236, 0.3)');
+                gradient.addColorStop(1, 'rgba(255, 182, 193, 0.1)');
+                
+                this.ctx.fillStyle = gradient;
+                this.ctx.beginPath();
+                this.ctx.arc(this.centerX, this.centerY, 240, 0, Math.PI * 2);
+                this.ctx.fill();
+            }
+            
+            // วาดก้าน
+            drawStem(progress) {
+                // ก้านหลัก
+                const stemGradient = this.ctx.createLinearGradient(
+                    this.centerX, this.height,
+                    this.centerX, this.centerY + 100
+                );
+                
+                stemGradient.addColorStop(0, '#2E7D32');
+                stemGradient.addColorStop(1, '#4CAF50');
+                
+                this.ctx.strokeStyle = stemGradient;
+                this.ctx.lineWidth = 10 * progress;
+                this.ctx.lineCap = 'round';
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.centerX, this.height);
+                this.ctx.lineTo(this.centerX, this.centerY + 120);
+                this.ctx.stroke();
+                
+                // ขนเล็กๆ บนก้าน
+                this.ctx.fillStyle = '#2E7D32';
+                for (let i = 0; i < 8; i++) {
+                    const y = this.height - (i * 40 * progress);
+                    const xVariation = Math.sin(i * 0.5) * 5;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.ellipse(
+                        this.centerX + xVariation, y,
+                        3 * progress, 8 * progress,
+                        0, 0, Math.PI * 2
+                    );
+                    this.ctx.fill();
+                }
+            }
+            
+            // วาดใบ
+            drawLeaves(progress) {
+                this.ctx.fillStyle = '#388E3C';
+                
+                // ใบใหญ่ 2 ใบ
+                const leaves = [
+                    {x: this.centerX - 40, y: this.centerY + 80, rotation: -0.5, size: 1.0},
+                    {x: this.centerX + 40, y: this.centerY + 60, rotation: 0.3, size: 0.9},
+                    {x: this.centerX - 30, y: this.centerY + 130, rotation: -0.8, size: 0.7},
+                    {x: this.centerX + 35, y: this.centerY + 110, rotation: 0.6, size: 0.6}
+                ];
+                
+                leaves.forEach(leaf => {
+                    if (progress > 0) {
+                        this.drawLeaf(leaf.x, leaf.y, leaf.rotation, progress * leaf.size);
+                    }
+                });
+            }
+            
+            // วาดใบแต่ละใบ
+            drawLeaf(x, y, rotation, progress) {
+                this.ctx.save();
+                this.ctx.translate(x, y);
+                this.ctx.rotate(rotation);
+                
+                // สร้าง gradient สำหรับใบ
+                const leafGradient = this.ctx.createLinearGradient(0, -30, 0, 60);
+                leafGradient.addColorStop(0, '#66BB6A');
+                leafGradient.addColorStop(1, '#2E7D32');
+                
+                this.ctx.fillStyle = leafGradient;
+                
+                // วาดใบ
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, 0);
+                
+                // ด้านซ้ายของใบ
+                this.ctx.bezierCurveTo(
+                    -40 * progress, -15 * progress,
+                    -70 * progress, 40 * progress,
+                    0, 80 * progress
+                );
+                
+                // ด้านขวาของใบ
+                this.ctx.bezierCurveTo(
+                    40 * progress, 40 * progress,
+                    25 * progress, -10 * progress,
+                    0, 0
+                );
+                
+                this.ctx.fill();
+                
+                // เส้นกลางใบ
+                this.ctx.strokeStyle = '#1B5E20';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, 0);
+                this.ctx.lineTo(0, 70 * progress);
+                this.ctx.stroke();
+                
+                this.ctx.restore();
+            }
+            
+            // วาดดอกกุหลาบ
+            drawFlower(progress) {
+                // คำนวณจำนวนกลีบที่จะวาด
+                this.petalCount = Math.floor(this.totalPetals * progress);
+                
+                // วาดแต่ละชั้นของดอกกุหลาบ
+                const layers = [
+                    {count: 5, radius: 20, size: 15},    // ชั้นในสุด
+                    {count: 8, radius: 40, size: 20},    // ชั้นที่ 2
+                    {count: 12, radius: 70, size: 25},   // ชั้นที่ 3
+                    {count: 15, radius: 100, size: 30},  // ชั้นที่ 4
+                    {count: 20, radius: 130, size: 35}   // ชั้นนอกสุด
+                ];
+                
+                let petalsDrawn = 0;
+                
+                // วาดแต่ละชั้น
+                layers.forEach((layer, layerIndex) => {
+                    // จำนวนกลีบที่จะวาดในชั้นนี้
+                    const petalsInLayer = Math.min(layer.count, this.petalCount - petalsDrawn);
+                    
+                    for (let i = 0; i < petalsInLayer; i++) {
+                        const angle = (i / layer.count) * Math.PI * 2;
+                        this.drawPetal(layerIndex, i, layer.count, angle, layer.radius, layer.size);
+                    }
+                    
+                    petalsDrawn += petalsInLayer;
+                });
+                
+                // วาดเกสรดอก (เมื่อใกล้เสร็จ)
+                if (progress > 0.9) {
+                    const stamenProgress = (progress - 0.9) / 0.1;
+                    this.drawStamens(stamenProgress);
+                }
+                
+                // อัพเดทข้อมูล
+                document.getElementById('petalNum').textContent = this.petalCount;
+            }
+            
+            // วาดกลีบดอกแต่ละกลีบ
+            drawPetal(layerIndex, petalIndex, totalInLayer, angle, radius, size) {
+                const x = this.centerX + Math.cos(angle) * radius;
+                const y = this.centerY + Math.sin(angle) * radius;
+                
+                // เลือกสีตามชั้น
+                const colorIndex = Math.min(layerIndex, this.pinkColors.length - 1);
+                const color = this.pinkColors[colorIndex];
+                
+                this.ctx.save();
+                this.ctx.translate(x, y);
+                this.ctx.rotate(angle + Math.PI / 2);
+                
+                // สร้าง gradient สำหรับกลีบดอก
+                const gradient = this.ctx.createLinearGradient(0, -size/2, 0, size);
+                gradient.addColorStop(0, this.lightenColor(color, 30));
+                gradient.addColorStop(0.5, color);
+                gradient.addColorStop(1, this.darkenColor(color, 30));
+                
+                this.ctx.fillStyle = gradient;
+                
+                // วาดกลีบดอก
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, 0);
+                
+                // ด้านบนของกลีบดอก
+                this.ctx.bezierCurveTo(
+                    -size * 0.8, -size * 0.3,
+                    -size * 0.9, size * 0.3,
+                    0, size * 0.6
+                );
+                
+                // ด้านล่างของกลีบดอก
+                this.ctx.bezierCurveTo(
+                    size * 0.9, size * 0.3,
+                    size * 0.8, -size * 0.3,
+                    0, 0
+                );
+                
+                this.ctx.fill();
+                
+                // เส้นขอบกลีบดอก
+                this.ctx.strokeStyle = this.darkenColor(color, 50);
+                this.ctx.lineWidth = 1;
+                this.ctx.stroke();
+                
+                this.ctx.restore();
+            }
+            
+            // วาดเกสรดอก
+            drawStamens(progress) {
+                // เกสรกลาง
+                const centerGradient = this.ctx.createRadialGradient(
+                    this.centerX, this.centerY, 0,
+                    this.centerX, this.centerY, 20 * progress
+                );
+                centerGradient.addColorStop(0, '#FFF9C4');
+                centerGradient.addColorStop(1, '#FFEB3B');
+                
+                this.ctx.fillStyle = centerGradient;
+                this.ctx.beginPath();
+                this.ctx.arc(this.centerX, this.centerY, 20 * progress, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // เกสรย่อยรอบๆ
+                const stamenCount = 24;
+                for (let i = 0; i < stamenCount; i++) {
+                    const angle = (i / stamenCount) * Math.PI * 2;
+                    const distance = 15 + Math.sin(i * 0.5) * 5;
+                    
+                    const x = this.centerX + Math.cos(angle) * distance * progress;
+                    const y = this.centerY + Math.sin(angle) * distance * progress;
+                    
+                    // สีเกสรย่อย
+                    const stamenGradient = this.ctx.createRadialGradient(x, y, 0, x, y, 6 * progress);
+                    stamenGradient.addColorStop(0, '#FFF9C4');
+                    stamenGradient.addColorStop(1, '#FDD835');
+                    
+                    this.ctx.fillStyle = stamenGradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 6 * progress, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+            }
+            
+            // ฟังก์ชันปรับสีให้สว่างขึ้น
+            lightenColor(color, percent) {
+                const num = parseInt(color.replace('#', ''), 16);
+                const amt = Math.round(2.55 * percent);
+                const R = (num >> 16) + amt;
+                const G = (num >> 8 & 0x00FF) + amt;
+                const B = (num & 0x0000FF) + amt;
+                
+                return `#${(
+                    0x1000000 +
+                    (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+                    (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+                    (B < 255 ? (B < 1 ? 0 : B) : 255)
+                )
+                .toString(16)
+                .slice(1)}`;
+            }
+            
+            // ฟังก์ชันปรับสีให้เข้มขึ้น
+            darkenColor(color, percent) {
+                const num = parseInt(color.replace('#', ''), 16);
+                const amt = Math.round(2.55 * percent);
+                const R = (num >> 16) - amt;
+                const G = (num >> 8 & 0x00FF) - amt;
+                const B = (num & 0x0000FF) - amt;
+                
+                return `#${(
+                    0x1000000 +
+                    (R > 0 ? (R > 255 ? 255 : R) : 0) * 0x10000 +
+                    (G > 0 ? (G > 255 ? 255 : G) : 0) * 0x100 +
+                    (B > 0 ? (B > 255 ? 255 : B) : 0)
+                )
+                .toString(16)
+                .slice(1)}`;
+            }
+            
+            // อัพเดทความคืบหน้า
+            updateProgress(progress) {
+                this.progress = progress;
+                this.draw();
+            }
         }
-      }, 40);
-    }
-
-    // Fireworks effect
-    const canvas = document.getElementById("fireworks");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-
-    function launchFireworks() {
-      resizeCanvas();
-      for (let i = 0; i < 20; i++) {
-        particles.push(createParticle());
-      }
-      animateFireworks();
-    }
-
-    function createParticle() {
-      const angle = Math.random() * 2 * Math.PI;
-      const speed = Math.random() * 5 + 2;
-      return {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        dx: Math.cos(angle) * speed,
-        dy: Math.sin(angle) * speed,
-        radius: Math.random() * 4 + 2,
-        life: 100,
-        color: `hsl(${Math.random() * 360}, 100%, 70%)`
-      };
-    }
-
-    function animateFireworks() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-        p.x += p.dx;
-        p.y += p.dy;
-        p.life--;
-      });
-      particles = particles.filter(p => p.life > 0);
-      if (particles.length > 0) {
-        requestAnimationFrame(animateFireworks);
-      }
-    }
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-  </script>
+        
+        // YouTube Player Variables
+        let player;
+        let isPlaying = false;
+        let playerReady = false;
+        
+        // YouTube Player Functions
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubeIframe', {
+                height: '0',
+                width: '0',
+                videoId: 'y04gImu0qiw', // ID จากลิงก์ https://www.youtube.com/watch?v=y04gImu0qiw
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+        
+        function onPlayerReady(event) {
+            playerReady = true;
+            console.log("YouTube Player ready");
+            
+            // ตั้งค่าระดับเสียงเริ่มต้น
+            player.setVolume(50);
+            
+            // ตั้งค่าให้เล่นเฉพาะเสียง (ไม่แสดงวิดีโอ)
+            player.mute(); // Mute ก่อนแล้วค่อย unmute เมื่อผู้ใช้กดเล่น
+        }
+        
+        function onPlayerStateChange(event) {
+            // อัพเดทสถานะการเล่น
+            if (event.data == YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                updateMusicButton(true);
+            } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                isPlaying = false;
+                updateMusicButton(false);
+            }
+        }
+        
+        function updateMusicButton(playing) {
+            const musicToggle = document.getElementById('musicToggle');
+            const musicIcon = document.getElementById('musicIcon');
+            
+            if (playing) {
+                musicIcon.className = 'fas fa-pause';
+                musicToggle.classList.add('active');
+            } else {
+                musicIcon.className = 'fas fa-play';
+                musicToggle.classList.remove('active');
+            }
+        }
+        
+        function togglePlayPause() {
+            if (!playerReady) return;
+            
+            if (isPlaying) {
+                player.pauseVideo();
+            } else {
+                // Unmute ก่อนเล่น
+                player.unMute();
+                player.playVideo();
+            }
+        }
+        
+        // เริ่มต้นเมื่อหน้าเว็บโหลดเสร็จ
+        document.addEventListener('DOMContentLoaded', function() {
+            // สร้างดอกไม้ลอย
+            createFloatingFlowers();
+            
+            // สร้างดอกกุหลาบ
+            const canvas = document.getElementById('roseCanvas');
+            const rose = new PinkRose(canvas);
+            
+            // ตัวแปรสำหรับอนิเมชั่น
+            let animationInterval;
+            let progress = 0;
+            const duration = 10000; // 10 วินาที
+            
+            // Element อ้างอิง
+            const startBtn = document.getElementById('startBtn');
+            const letterBtn = document.getElementById('letterBtn');
+            const progressPercent = document.getElementById('progressPercent');
+            const progressFill = document.getElementById('progressFill');
+            const roseInfo = document.getElementById('roseInfo');
+            
+            // เริ่มสร้างดอกกุหลาบ
+            startBtn.addEventListener('click', function() {
+                if (animationInterval) {
+                    clearInterval(animationInterval);
+                }
+                
+                startBtn.disabled = true;
+                startBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ดอกกุหลาบกำลังผลิบาน...';
+                roseInfo.textContent = 'ดอกกุหลาบกำลังผลิบาน...';
+                
+                progress = 0;
+                const startTime = Date.now();
+                const endTime = startTime + duration;
+                
+                animationInterval = setInterval(function() {
+                    const now = Date.now();
+                    progress = Math.min(1, (now - startTime) / duration);
+                    
+                    // อัพเดทความคืบหน้า
+                    const percent = Math.round(progress * 100);
+                    progressPercent.textContent = `${percent}%`;
+                    progressFill.style.width = `${percent}%`;
+                    
+                    // อัพเดทดอกกุหลาบ
+                    rose.updateProgress(progress);
+                    
+                    // เมื่อเสร็จสิ้น
+                    if (progress >= 1) {
+                        clearInterval(animationInterval);
+                        
+                        startBtn.style.display = 'none';
+                        letterBtn.disabled = false;
+                        
+                        roseInfo.innerHTML = '<i class="fas fa-check-circle"></i> ดอกกุหลาบผลิบานสมบูรณ์แล้ว!';
+                        
+                        // เพิ่มเอฟเฟกต์สำเร็จ
+                        canvas.style.filter = 'drop-shadow(0 0 15px rgba(255, 105, 180, 0.5))';
+                    }
+                }, 50);
+            });
+            
+            // เปิดจดหมาย
+            letterBtn.addEventListener('click', function() {
+                document.getElementById('letterPopup').style.display = 'flex';
+            });
+            
+            // ปิดจดหมาย
+            document.getElementById('closeLetterBtn').addEventListener('click', function() {
+                document.getElementById('letterPopup').style.display = 'none';
+            });
+            
+            // YouTube Player Controls - ปุ่มเดียวเท่านั้น
+            const musicToggle = document.getElementById('musicToggle');
+            
+            musicToggle.addEventListener('click', function() {
+                togglePlayPause();
+            });
+            
+            // ปิดจดหมายเมื่อคลิกนอกจดหมาย
+            document.getElementById('letterPopup').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                }
+            });
+            
+            // เพิ่มคำแนะนำสำหรับผู้ใช้เกี่ยวกับเพลง
+            setTimeout(function() {
+                if (playerReady) {
+                    console.log("YouTube Player loaded successfully");
+                } else {
+                    console.log("Waiting for YouTube Player to load...");
+                }
+            }, 2000);
+        });
+        
+        // Fallback ถ้า YouTube API ไม่โหลด
+        window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    </script>
 </body>
 </html>
